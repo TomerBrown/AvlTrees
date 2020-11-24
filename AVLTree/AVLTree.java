@@ -1,5 +1,3 @@
-import sun.util.locale.provider.AvailableLanguageTags;
-
 /**
  *
  * AVLTree
@@ -10,14 +8,6 @@ import sun.util.locale.provider.AvailableLanguageTags;
  */
 
 public class AVLTree {
-	public static void main(String[] args) {
-		AVLTree tree = new AVLTree();
-		tree.insert(3,"tomer");
-		tree.insert(1,"nadav");
-		tree.insert(5,"asd");
-		System.out.println(tree.root.getKey());
-
-	}
 	private IAVLNode root;
 	private int size;
 	public AVLTree(){
@@ -72,15 +62,8 @@ public class AVLTree {
    */
    public int insert(int k, String i) {
    	IAVLNode node = new AVLNode(k,i);
-   	if (this.empty()){
-   		this.root = node;
-   		return 0;
-	}
-   	else {
-		insert_rec(this.root, node);
-		this.size++;
-		return 0;
-	}
+   	insert_rec(this.root,node);
+   	return 0;
 
    }
 	public void insert_rec (IAVLNode node , IAVLNode to_insert){
