@@ -14,17 +14,20 @@ import java.io.OutputStreamWriter;
 public class AVLTree {
 	public static void main(String[] args) {
 		AVLTree tree = new AVLTree();
-		tree.insert(3,"tomer");
+		tree.insert(4,"tomer");
 		tree.insert(1,"nadav");
 		tree.insert(5,"asd");
-		tree.insert(4,"asd");
+		tree.insert(6,"asd");
 		tree.insert(8,"asd");
 		tree.insert(2,"asd");
 		System.out.println(tree.root.getKey());
 		System.out.println(tree.root.getLeft().getKey());
 		System.out.println(tree.root.getRight().getKey());
 		System.out.println(tree.root.getRight().getLeft().getKey());
-		System.out.println (tree.search(76));
+		System.out.println (tree.search(8));
+		System.out.println("Height:" +tree.getHeightByKey(2));
+		System.out.println("AVL: "+tree.isAVL());
+		System.out.println("BST: "+tree.isBST());
 		tree.print();
 
 
@@ -60,22 +63,85 @@ public class AVLTree {
   public String search(int k)
   {
 	IAVLNode root = this.root;
-	return search_rec(k,root);
+	if (search_node(k,root)==null){
+		return null;
+	}
+	else {
+	return search_node(k, root).getValue();
+	}
   }
-  private String search_rec (int k, IAVLNode node){
+  private IAVLNode search_node (int k, IAVLNode node){
   	if (!node.isRealNode()){
   		return null;
 	}
   	if (node.getKey() == k){
-  		return node.getValue();
+  		return node;
 	}
   	if (node.getKey()<k){
-  		return search_rec(k,node.getRight());
+  		return search_node(k,node.getRight());
 	}
   	else{
-  		return search_rec(k,node.getLeft());
+  		return search_node(k,node.getLeft());
 	}
   }
+
+  //Checks AVL Property
+  public boolean isAVL (){
+ 	return isAVl_rec((AVLNode) this.getRoot());
+  }
+  public boolean isAVl_rec(AVLNode node){
+	  if (!node.isRealNode()) {
+		  return true;
+	  }
+ 	else if (Math.abs(node.get_balance_factor())>1) {
+		return false;
+	}
+ 	else{
+ 		return (isAVl_rec((AVLNode) node.getLeft())&& isAVl_rec((AVLNode) node.getRight()));
+	}
+  }
+
+  //Checks Binary Tree Property
+	public boolean isBST(){
+ 		return isBST_rec(this.getRoot(),this.minKey(),this.maxKey());
+	}
+	public boolean isBST_rec(IAVLNode node,int min,int max){
+ 		if (!node.isRealNode()) return true;
+ 		if (node.getKey()<min || node.getKey()>max){
+ 			return false;
+		}
+ 		else{
+ 			return isBST_rec(node.getLeft(),min,node.getKey()) && isBST_rec(node.getRight(),node.getKey(),max);
+		}
+	}
+	public int minKey(){
+ 	IAVLNode node = this.getRoot();
+ 	while (node.getLeft().isRealNode()){
+ 		node = node.getLeft();
+	}
+ 	return node.getKey();
+	}
+	public int maxKey(){
+		IAVLNode node = this.getRoot();
+		while (node.getRight().isRealNode()){
+			node = node.getRight();
+		}
+		return node.getKey();
+	}
+	//count length of route from the node to the root
+	// @pre: node is inside tree
+	public int getHeightByNode (IAVLNode node){
+ 		if (!node.isRealNode()){
+ 			return -1;
+		}
+ 		int heightLeft = getHeightByNode(node.getLeft());
+ 		int heightRight = getHeightByNode(node.getRight());
+ 		return Math.max(heightLeft,heightRight)+1;
+	}
+	public int getHeightByKey(int key){
+ 		return getHeightByNode(search_node(key,this.getRoot()));
+	}
+
 
   /**
    * public int insert(int k, String i)
@@ -104,6 +170,10 @@ public class AVLTree {
    		if (node.getParent().getLeft()==node) node.getParent().setLeft(to_insert);
    		else node.getParent().setRight(to_insert);
    		to_insert.setParent(node.getParent());
+   		while (node.getParent()!= null){
+   			node = node.getParent();
+   			node.setHeight(Math.max(node.getLeft().getHeight(),node.getRight().getHeight())+1);
+		}
 	}
    	else{
    		if (node.getKey()<to_insert.getKey()){
