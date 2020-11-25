@@ -1,4 +1,5 @@
-import sun.util.locale.provider.AvailableLanguageTags;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 
 /**
  *
@@ -9,15 +10,27 @@ import sun.util.locale.provider.AvailableLanguageTags;
  *
  */
 
+
 public class AVLTree {
 	public static void main(String[] args) {
 		AVLTree tree = new AVLTree();
 		tree.insert(3,"tomer");
 		tree.insert(1,"nadav");
 		tree.insert(5,"asd");
+		tree.insert(4,"asd");
+		tree.insert(8,"asd");
+		tree.insert(2,"asd");
 		System.out.println(tree.root.getKey());
+		System.out.println(tree.root.getLeft().getKey());
+		System.out.println(tree.root.getRight().getKey());
+		System.out.println(tree.root.getRight().getLeft().getKey());
+		System.out.println (tree.search(76));
+		tree.print();
+
 
 	}
+
+
 	private IAVLNode root;
 	private int size;
 	public AVLTree(){
@@ -41,6 +54,9 @@ public class AVLTree {
    * returns the info of an item with key k if it exists in the tree
    * otherwise, returns null
    */
+ private void print (){
+	 TreePrinter.print(this.getRoot());
+ }
   public String search(int k)
   {
 	IAVLNode root = this.root;
@@ -74,25 +90,27 @@ public class AVLTree {
    	IAVLNode node = new AVLNode(k,i);
    	if (this.empty()){
    		this.root = node;
+		this.size++;
    		return 0;
-	}
+   	}
    	else {
 		insert_rec(this.root, node);
 		this.size++;
 		return 0;
 	}
-
    }
 	public void insert_rec (IAVLNode node , IAVLNode to_insert){
    	if (!node.isRealNode()){
-   		node = to_insert;
+   		if (node.getParent().getLeft()==node) node.getParent().setLeft(to_insert);
+   		else node.getParent().setRight(to_insert);
+   		to_insert.setParent(node.getParent());
 	}
    	else{
    		if (node.getKey()<to_insert.getKey()){
-   			insert_rec(node.getLeft() , to_insert);
+   			insert_rec(node.getRight() , to_insert);
 		}
    		else{
-   			insert_rec(node.getRight(),to_insert);
+   			insert_rec(node.getLeft(),to_insert);
 		}
 	}
 
@@ -181,7 +199,7 @@ public class AVLTree {
     */
    public IAVLNode getRoot()
    {
-	   return null;
+	   return this.root;
    }
      /**
     * public string split(int x)
@@ -212,7 +230,7 @@ public class AVLTree {
 	   * public interface IAVLNode
 	   * ! Do not delete or modify this - otherwise all tests will fail !
 	   */
-	public interface IAVLNode{	
+	public interface IAVLNode extends TreePrinter.PrintableNode {
 		public int getKey(); //returns node's key (for virtuval node return -1)
 		public String getValue(); //returns node's value [info] (for virtuval node return null)
 		public void setLeft(IAVLNode node); //sets left child
@@ -251,7 +269,9 @@ public class AVLTree {
 			this.key = key;
 			this.info = value;
 			this.left = new AVLNode();
+			this.left.setParent(this);
 			this.right = new AVLNode();
+			this.right.setParent(this);
 			this.height =0;
 		}
 
@@ -282,6 +302,22 @@ public class AVLTree {
 	   public IAVLNode getRight() {
 
 		   return this.right;
+	   }
+
+	   @Override
+	   public String getText() {
+		   String str;
+		   if (this.isRealNode()) {
+			   if (this.getParent() == null) {
+				   str = "[" + String.valueOf(this.getKey()) + " ,h-" + String.valueOf(this.getHeight()) +"]";
+			   } else {
+				   str = "[" + String.valueOf(this.getKey()) + " ,h-" + String.valueOf(this.getHeight()) + ",p-" + String.valueOf(this.getParent().getKey()) + "]";
+			   }
+			   return str;
+		   }
+		   else{
+				   return "X";
+			   }
 	   }
 
 	   public void setParent(IAVLNode node) {
