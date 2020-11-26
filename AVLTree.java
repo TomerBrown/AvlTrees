@@ -14,21 +14,27 @@ import java.io.OutputStreamWriter;
 public class AVLTree {
 	public static void main(String[] args) {
 		AVLTree tree = new AVLTree();
-		tree.insert(4,"tomer");
-		tree.insert(1,"nadav");
-		tree.insert(5,"asd");
-		tree.insert(6,"asd");
-		tree.insert(8,"asd");
-		tree.insert(2,"asd");
-		System.out.println(tree.root.getKey());
-		System.out.println(tree.root.getLeft().getKey());
-		System.out.println(tree.root.getRight().getKey());
-		System.out.println(tree.root.getRight().getLeft().getKey());
-		System.out.println (tree.search(8));
-		System.out.println("Height:" +tree.getHeightByKey(2));
+		tree.insert(3,"Asdas");
+		tree.insert(4,"tomer");;
+		tree.insert(9,"tomer");
+		tree.insert(10,"tomer");
+		tree.insert(11,"tomer");
+		tree.insert(24,"tomer");
+		tree.insert(50,"tomer");
+		tree.insert(15,"tomer");
+		tree.insert(18,"tomer");
+		tree.insert(13,"tomer");
+		tree.insert(1,"tomer");
+		tree.insert(12,"tomer");
+		tree.insert(22,"tomer");
+		int [] keys = tree.keysToArray();
+
 		System.out.println("AVL: "+tree.isAVL());
 		System.out.println("BST: "+tree.isBST());
 		tree.print();
+
+
+
 
 
 	}
@@ -93,7 +99,7 @@ public class AVLTree {
 	  if (!node.isRealNode()) {
 		  return true;
 	  }
- 	else if (Math.abs(node.get_balance_factor())>1) {
+ 	else if (Math.abs(node.getBalanceFactor())>1) {
 		return false;
 	}
  	else{
@@ -103,7 +109,7 @@ public class AVLTree {
 
   //Checks Binary Tree Property
 	public boolean isBST(){
- 		return isBST_rec(this.getRoot(),this.minKey(),this.maxKey());
+ 		return isBST_rec(this.getRoot(),this.minNode().getKey(),this.maxKey());
 	}
 	public boolean isBST_rec(IAVLNode node,int min,int max){
  		if (!node.isRealNode()) return true;
@@ -114,12 +120,12 @@ public class AVLTree {
  			return isBST_rec(node.getLeft(),min,node.getKey()) && isBST_rec(node.getRight(),node.getKey(),max);
 		}
 	}
-	public int minKey(){
+	public IAVLNode minNode(){
  	IAVLNode node = this.getRoot();
  	while (node.getLeft().isRealNode()){
  		node = node.getLeft();
 	}
- 	return node.getKey();
+ 	return node;
 	}
 	public int maxKey(){
 		IAVLNode node = this.getRoot();
@@ -152,19 +158,107 @@ public class AVLTree {
    * promotion/rotation - counted as one rebalnce operation, double-rotation is counted as 2.
    * returns -1 if an item with key k already exists in the tree.
    */
+  // node balance factor is -2
+  public void rightRotation (IAVLNode y){
+		IAVLNode x = y.getLeft();
+	  	if (y==this.getRoot()){
+		this.root = x;
+	  	}
+	  	else {
+			if (y.getParent().getLeft() == y) {
+				y.getParent().setLeft(x);
+			} else {
+				y.getParent().setRight(x);
+			}
+		}
+		IAVLNode b  = x.getRight();
+		x.setRight(y);
+		x.setParent(y.getParent());
+		y.setParent(x);
+		y.setLeft(b);
+	  	y.setHeight(calcHeight(y));
+	  	x.setHeight(calcHeight(x));
+		b.setParent(y);
+  }
+
+  public void leftRotation(IAVLNode y){
+  	IAVLNode x = y.getRight();
+  	if(y==this.getRoot()){
+  		this.root = x;
+	}
+  	else {
+  		if (y.getParent().getRight()==y){
+			y.getParent().setRight(x);
+		}
+		else{
+			y.getParent().setLeft(x);
+		}
+	}
+  	IAVLNode b = x.getLeft();
+  	x.setLeft(y);
+  	x.setParent(y.getParent());
+  	y.setParent(x);
+  	y.setRight(b);
+  	y.setHeight(calcHeight(y));
+  	x.setHeight(calcHeight(x));
+  	b.setParent(y);
+  }
+
+  public static int calcHeight (IAVLNode y){
+  	return Math.max(y.getLeft().getHeight(),y.getRight().getHeight())+1;
+  }
+
+  public void rightThenLeftRotation (IAVLNode z){
+  	rightRotation(z.getRight());
+  	leftRotation(z);
+  }
+	public void leftThenRightRotation (IAVLNode z){
+  		leftRotation(z.getLeft());
+		rightRotation(z);
+	}
+  private static int getBalanceFactor (IAVLNode node){
+  	return node.getLeft().getHeight()- node.getRight().getHeight();
+  }
    public int insert(int k, String i) {
+  	int cnt = 0;
    	IAVLNode node = new AVLNode(k,i);
    	if (this.empty()){
    		this.root = node;
 		this.size++;
-   		return 0;
    	}
    	else {
 		insert_rec(this.root, node);
 		this.size++;
-		return 0;
+   	}
+
+   	int bf;
+   	while(node!=null){
+   		bf = getBalanceFactor(node);
+   		if (bf<-1) {
+			if (getBalanceFactor(node.getRight()) > 0) {
+				rightThenLeftRotation(node);
+			} else {
+				leftRotation(node);
+			}
+		}
+		else if (bf>1){
+			if (getBalanceFactor(node.getRight()) > 0){
+				rightRotation(node);
+			}
+			else{
+				leftThenRightRotation(node);
+			}
+		}
+		else{
+			node.setHeight(Math.max(node.getLeft().getHeight(),node.getRight().getHeight())+1);
+		}
+		node = node.getParent();
+
+		}
+	   return 0;
 	}
-   }
+
+
 	public void insert_rec (IAVLNode node , IAVLNode to_insert){
    	if (!node.isRealNode()){
    		if (node.getParent().getLeft()==node) node.getParent().setLeft(to_insert);
@@ -207,7 +301,7 @@ public class AVLTree {
     */
    public String min()
    {
-	   return "42"; // to be replaced by student code
+	   return minNode().getValue() ; // to be replaced by student code
    }
 
    /**
@@ -227,10 +321,24 @@ public class AVLTree {
    * Returns a sorted array which contains all keys in the tree,
    * or an empty array if the tree is empty.
    */
+  public void treeToNodeArray (IAVLNode node , IAVLNode [] arr, int [] c){
+  	if (!node.isRealNode()) return;
+  	treeToNodeArray(node.getLeft(),arr,c);
+  	arr [c[0]] = node;
+  	c[0]++;
+  	treeToNodeArray(node.getRight(),arr,c);
+
+  }
+
   public int[] keysToArray()
   {
-        int[] arr = new int[42]; // to be replaced by student code
-        return arr;              // to be replaced by student code
+	  IAVLNode [] arr = new IAVLNode [this.size()];
+	  this.treeToNodeArray(this.getRoot(),arr,new int [] {0});
+	  int [] ret = new int [arr.length];
+	  for (int i=0; i< arr.length;i++){
+	  	ret[i] = arr[i].getKey();
+	  }
+	  return ret;
   }
 
   /**
@@ -242,9 +350,15 @@ public class AVLTree {
    */
   public String[] infoToArray()
   {
-        String[] arr = new String[42]; // to be replaced by student code
-        return arr;                    // to be replaced by student code
+	  IAVLNode [] arr = new IAVLNode [this.size()];
+	  this.treeToNodeArray(this.getRoot(),arr,new int [] {0});
+	  String [] ret = new String [arr.length];
+	  for (int i=0; i< arr.length;i++){
+		  ret[i] = arr[i].getValue();
+	  }
+	  return ret;
   }
+
 
    /**
     * public int size()
@@ -256,7 +370,7 @@ public class AVLTree {
     */
    public int size()
    {
-	   return 42; // to be replaced by student code
+	   return this.size; // to be replaced by student code
    }
    
      /**
@@ -412,14 +526,14 @@ public class AVLTree {
 		  return this.height; // to be replaced by student code
 		}
 		// return the balance factor of a node
-		public int get_balance_factor(){
+		public int getBalanceFactor(){
 	   	if (!isRealNode()){
 	   		return 0;
 		}
 	   	return this.left.getHeight() - this.right.getHeight();
 		}
   }
-
 }
+
   
 
