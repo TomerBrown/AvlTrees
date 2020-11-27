@@ -14,61 +14,31 @@ import java.io.OutputStreamWriter;
 public class AVLTree {
 	public static void main(String[] args) {
 		AVLTree tree = new AVLTree();
-		AVLTree tree2 = new AVLTree();
-		AVLTree tree3 = new AVLTree();
-		AVLTree tree4 = new AVLTree();
-
-		tree.insert(1,"Asdas");
-		tree.insert(2,"tomer");;
-		tree.insert(3,"tomer");
-
-
-
-
-
-		tree2.insert(5,"tomer");
-		tree2.insert(6,"tomer");
-		tree2.insert(7,"tomer");
-		tree2.insert(8,"tomer");
-		tree2.insert(9,"tomer");
-		tree2.insert(10,"tomer");
-		tree2.insert(11,"tomer");
-		tree2.insert(12,"tomer");
-		tree2.insert(13,"tomer");
+		tree.insert(3,"Asdas");
+		tree.insert(4,"tomer");;
+		tree.insert(9,"tomer");
+		tree.insert(10,"tomer");
+		tree.insert(11,"tomer");
+		tree.insert(24,"tomer");
+		tree.insert(50,"tomer");
+		tree.insert(15,"tomer");
+		tree.insert(18,"tomer");
+		tree.insert(13,"tomer");
+		tree.insert(1,"tomer");
+		tree.insert(12,"tomer");
+		tree.insert(22,"tomer");
 		int [] keys = tree.keysToArray();
 
-		tree4.insert(18,"asdsa");
-		tree4.insert(17,"asdsa");
-		tree4.insert(19,"asdsa");
-		tree4.insert(21,"asdsa");
-		tree4.insert(23,"asdsa");
+		System.out.println("AVL: "+tree.isAVL());
+		System.out.println("BST: "+tree.isBST());
+		tree.print();
 
-		AVLTree tree5 = new AVLTree();
-		//tree5.insert(5,"asd");
-
-		tree3.insert(14,"asdsa");
-		IAVLNode node = tree3.getRoot();
-
-		//System.out.println("AVL: "+tree.isAVL());
-		//System.out.println("BST: "+tree.isBST());
-		//tree.print();
-
-		//System.out.println("AVL: "+tree.isAVL());
-		//System.out.println("BST: "+tree.isBST());
-		//tree2.print();
-
-		printJoined(tree2,tree4,node);
 
 
 
 
 	}
-	private static void printJoined(AVLTree tree1 , AVLTree tree2,IAVLNode node){
-		//System.out.println("AVL: "+tree2.isAVL());
-		//System.out.println("BST: "+tree2.isBST());
-		System.out.println(tree1.join(node,tree2));
-		tree1.print();
-	}
+
 
 	private IAVLNode root;
 	private int size;
@@ -139,7 +109,7 @@ public class AVLTree {
 
   //Checks Binary Tree Property
 	public boolean isBST(){
- 		return isBST_rec(this.getRoot(),this.minNode().getKey(),this.maxNode().getKey());
+ 		return isBST_rec(this.getRoot(),this.minNode().getKey(),this.maxKey());
 	}
 	public boolean isBST_rec(IAVLNode node,int min,int max){
  		if (!node.isRealNode()) return true;
@@ -157,12 +127,12 @@ public class AVLTree {
 	}
  	return node;
 	}
-	public IAVLNode maxNode(){
+	public int maxKey(){
 		IAVLNode node = this.getRoot();
 		while (node.getRight().isRealNode()){
 			node = node.getRight();
 		}
-		return node;
+		return node.getKey();
 	}
 	//count length of route from the node to the root
 	// @pre: node is inside tree
@@ -342,7 +312,7 @@ public class AVLTree {
     */
    public String max()
    {
-	   return this.maxNode().getValue(); // to be replaced by student code
+	   return "42"; // to be replaced by student code
    }
 
   /**
@@ -437,119 +407,8 @@ public class AVLTree {
     */   
    public int join(IAVLNode x, AVLTree t)
    {
-   		//Initial check if one or both is empty
-	   if (!this.getRoot().isRealNode()){
-	   	this.root = t.getRoot();
-	   	t.insert(x.getKey(),x.getValue());
-	   	return this.calcComplexity(t);
-	   }
-	   if (!t.getRoot().isRealNode()){
-		   this.insert(x.getKey(),x.getValue());
-		   return this.calcComplexity(t);
-	   }
-   		//Set pointers for larger and smaller trees according to theirs height (Complexity of stage: O(1))
-   		AVLTree higherTree, shorterTree;
-   		if (this.getRoot().getHeight()>t.getRoot().getHeight()){
-   			higherTree = this;
-   			shorterTree = t;
-		}
-   		else{
-   			shorterTree = this;
-   			higherTree = t;
-		}
-   		boolean higher_is_larger = higherTree.getRoot().getKey()>x.getKey();
-   		int largerTreeHeight = higherTree.getRoot().getHeight();
-	   	int smallerTreeHeight = shorterTree.getRoot().getHeight();
-	   	if (largerTreeHeight-smallerTreeHeight<=1) {//that means we can simply merge
-			simpleMerge(t, x);
-			return this.calcComplexity(t);
-		}
-	   		if (higher_is_larger){
-	   			x.setRight(higherTree.getRoot());
-				x.setLeft(higherTree.getRoot());
-
-			}
-	   		else{
-				x.getRight().setParent(x);
-				x.getLeft().setParent(x);
-	   		}
-
-   		IAVLNode node = getNodeWithHeight(higherTree,smallerTreeHeight,higher_is_larger);
-   		if (higher_is_larger) {
-			setPointersForJoinLeft(shorterTree.getRoot(), node, x);
-		}
-   		else{
-   			setPointersForJoinRight(shorterTree.getRoot(),node,x);
-		}
-	   this.root = higherTree.root;
-	   setHeightUpTree (x);
-
-	   return this.calcComplexity(t);
-
+	   return 0; 
    }
-	//Calculate the complexity as requested in conditions
-	private int calcComplexity (AVLTree t){
-   	return Math.abs(this.getRoot().getHeight()-t.getRoot().getHeight()) +1;
-	}
-   //Simple merge = check who is bigger and merge. needs to set the root to x
-	private void simpleMerge (AVLTree other, IAVLNode x){
-   	if (this.getRoot().getKey()> other.getRoot().getKey()){
-   		x.setRight(this.getRoot());
-		x.setLeft(other.getRoot());
-	}
-   	else{
-		x.setRight(other.getRoot());
-		x.setLeft(this.getRoot());
-	}
-   	x.getLeft().setParent(x);
-   	x.getRight().setParent(x);
-   	x.setHeight(calcHeight(x));
-   	this.root = x;
-	}
-   // gets pointers to the root of the smaller tree, the node with appropriate height on the left branch of higherTree and x
-	// sets the appropriate pointers that maintains tree relations
-   private static void setPointersForJoinLeft (IAVLNode smallerRoot, IAVLNode foundNode, IAVLNode x){
-	   x.setLeft(smallerRoot);
-	   x.setRight(foundNode);
-	   foundNode.getParent().setLeft(x);
-	   x.setParent(foundNode.getParent());
-	   foundNode.setParent(x);
-	   smallerRoot.setParent(x);
-   }
-	// gets pointers to the root of the smaller tree, the node with appropriate height on the right branch of higherTree and x
-	// sets the appropriate pointers that maintains tree relations
-	private static void setPointersForJoinRight (IAVLNode smallerRoot, IAVLNode foundNode, IAVLNode x){
-		x.setRight(smallerRoot);
-		x.setLeft(foundNode);
-		foundNode.getParent().setRight(x);
-		x.setParent(foundNode.getParent());
-		foundNode.setParent(x);
-		smallerRoot.setParent(x);
-	}
-   //Gets a node and goes upstream in the tree and updates heights with property: node.height = max(node.left.key, node.right.key)+1;
-   private static void setHeightUpTree (IAVLNode node){
-	   while (node!=null){
-		   node.setHeight(calcHeight(node));
-		   node=node.getParent();
-	   }
-   }
-
-   //Gets the node from larger tree that satisfies the propery ($ret.getHeight()-shorter.getHeight()== 0 or -1)
-	// node will be on the left branch if longer >x>shorter and on the right branch otherwise (if shorter>x>longer)
-	private static IAVLNode getNodeWithHeight(AVLTree higherTree, int smallerTreeHeight, boolean largerIsBigger){
-		IAVLNode node = higherTree.getRoot();
-		if  (largerIsBigger){
-			while (node.getHeight()-smallerTreeHeight>1){
-				node = node.getLeft();
-			}
-		}
-		else {
-			while (node.getHeight() - smallerTreeHeight > 1) {
-				node = node.getRight();
-			}
-		}
-   		return node;
-	}
 
 	/**
 	   * public interface IAVLNode
