@@ -13,7 +13,15 @@ import java.io.OutputStreamWriter;
 
 public class AVLTree {
 	public static void main(String[] args) {
-		AVLTree tree1 = new AVLTree();
+		AVLTree tree = new AVLTree();
+		String st;
+		for (int i=0; i<100; i++){
+			st = "num" +i;
+			tree.insert(i,st);
+		}
+		System.out.println(tree.min);
+		System.out.println(tree.max);
+		/*AVLTree tree1 = new AVLTree();
 		AVLTree tree2 = new AVLTree();
 		AVLTree sent = new AVLTree();
 		sent.insert(7,"sdfsdf");
@@ -48,7 +56,7 @@ public class AVLTree {
 		x.join(node,y);
 		System.out.println(x.isBST());
 		System.out.println(x.isAVL());
-		x.print();
+		x.print();*/
 
 
 
@@ -728,6 +736,7 @@ public class AVLTree {
     */
    public String min()
    {
+	   if(this.min == null) return null;
 	   return this.min.getValue(); // to be replaced by student code
    }
 
@@ -739,6 +748,7 @@ public class AVLTree {
     */
    public String max()
    {
+	   if(this.max== null) return null;
 	   return this.max.getValue(); // to be replaced by student code
    }
 
