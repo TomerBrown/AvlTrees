@@ -662,9 +662,10 @@ public class AVLTree {
 	   private int keepBalanced(IAVLNode node) {
 		   int cnt = 0;
 		   while(node!=null) {
-		   
+		   	
 	   
 			   int bf = getBalanceFactor(node);
+			   node.setHeight(calcHeight(node));
 			   if(bf == -2) {
 				   int rightBF = getBalanceFactor(node.getRight());
 				   if (rightBF < 1) {
