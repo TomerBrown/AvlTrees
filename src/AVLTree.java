@@ -888,7 +888,7 @@ public class AVLTree {
    {	this.size += t.size()+1;
    		//Initial check if one or both is empty
 	   if (this.empty()&&t.empty()){
-	   	this.insert(x.getKey(),x.getText());
+	   	this.insert(x.getKey(),x.getValue());
 	   	return this.calcComplexity(t);
 	   }
 	   if  (this.empty()){ //only this is empty
