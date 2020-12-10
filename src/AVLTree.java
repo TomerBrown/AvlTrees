@@ -12,154 +12,6 @@ import java.io.OutputStreamWriter;
 
 
 public class AVLTree {
-	public static void main(String[] args) {
-		AVLTree tree = new AVLTree();
-		String st;
-		for (int i=0; i<100; i++){
-			st = "num" +i;
-			tree.insert(i,st);
-		}
-		System.out.println(tree.min);
-		System.out.println(tree.max);
-		/*AVLTree tree1 = new AVLTree();
-		AVLTree tree2 = new AVLTree();
-		AVLTree sent = new AVLTree();
-		sent.insert(7,"sdfsdf");
-		IAVLNode node = sent.getRoot();
-		sent.delete(15);
-		tree2.insert(1,"Asdas");
-		tree2.insert(2,"tomer");
-		tree2.insert(3,"tomer");
-		tree2.insert(4,"Asdas");
-		tree2.insert(5,"tomer");
-		tree2.insert(6,"tomer");
-		tree2.insert(7,"Asdas");
-		tree2.delete(4);
-		tree2.insert(8,"ASdasd");
-		tree2.insert(18,"ASdasd");
-		tree2.insert(22,"ASdasd");
-		tree2.print();
-		System.out.println(tree2.min.getKey());
-		System.out.println(tree2.max.getKey());
-		AVLTree [] arr = tree2.split(7);
-		System.out.println("   Arr[0]             ");
-		arr[0].print();
-		System.out.println(arr[0].min.getKey());
-		System.out.println(arr[0].max.getKey());
-		System.out.println("      Arr[1]          ");
-		arr[1].print();
-		System.out.println(arr[1].max.getKey());
-		System.out.println(arr[1].min.getKey());
-		AVLTree x = arr[0];
-		AVLTree y = arr[1];
-
-		x.join(node,y);
-		System.out.println(x.isBST());
-		System.out.println(x.isAVL());
-		x.print();*/
-
-
-
-
-		/*tree.print();
-		System.out.println("min = " +tree.min.getKey());
-		System.out.println("max = " +tree.max.getKey());
-		tree.delete(99);
-		System.out.println(99 + "deleted");
-		System.out.println("min = " +tree.min.getKey());
-		System.out.println("max = " +tree.max.getKey());
-		tree.delete(3);
-		System.out.println(3 + "deleted");
-		System.out.println("min = " +tree.min.getKey());
-		System.out.println("max = " +tree.max.getKey());
-		tree.delete(15);
-		System.out.println(15 + "deleted");
-		System.out.println("min = " +tree.min.getKey());
-		System.out.println("max = " +tree.max.getKey());
-		tree.delete(65);
-		System.out.println(65 + "deleted");
-		System.out.println("min = " +tree.min.getKey());
-		System.out.println("max = " +tree.max.getKey());
-		tree.delete(15);
-		System.out.println(15 + "deleted");
-		System.out.println("min = " +tree.min.getKey());
-		System.out.println("max = " +tree.max.getKey());
-		tree.delete(12);
-		System.out.println(12 + "deleted");
-		System.out.println("min = " +tree.min.getKey());
-		System.out.println("max = " +tree.max.getKey());
-		tree.delete(4);
-		System.out.println(4 + "deleted");
-		System.out.println("min = " +tree.min.getKey());
-		System.out.println("max = " +tree.max.getKey());
-
-
-		tree.print();*/
-
-
-
-
-		/*System.out.println(tree.insert(3,"tomer"));
-		//tree.print();
-		System.out.println(tree.insert(12,"tomer"));
-		System.out.println("AVL: "+tree.isAVL());
-		System.out.println("BST: "+tree.isBST());
-		System.out.println("min = "+ tree.min.getKey());
-		System.out.println("max = "+ tree.max.getKey());
-		tree.print();
-		System.out.println("pred  = "+ tree.successor(tree.search_node(3,tree.getRoot())).getKey());
-		System.out.println("pred  = "+ tree.successor(tree.search_node(5,tree.getRoot())).getKey());
-		System.out.println("pred  = "+ tree.successor(tree.search_node(6,tree.getRoot())).getKey());
-		System.out.println("pred  = "+ tree.successor(tree.search_node(10,tree.getRoot())).getKey());
-		System.out.println("pred  = "+ tree.successor(tree.search_node(12,tree.getRoot())).getKey());
-		System.out.println("pred  = "+ tree.predecessor(tree.search_node(5,tree.getRoot())).getKey());
-		System.out.println("pred  = "+ tree.predecessor(tree.search_node(6,tree.getRoot())).getKey());
-		System.out.println("pred  = "+ tree.predecessor(tree.search_node(10,tree.getRoot())).getKey());
-		System.out.println("pred  = "+ tree.predecessor(tree.search_node(12,tree.getRoot())).getKey());
-		System.out.println("pred  = "+ tree.predecessor(tree.search_node(15,tree.getRoot())).getKey());*/
-		/*tree.insert(11, "gredc");
-		tree.insert(4,  "asghdv");
-		tree.insert(13, "fa,lf");
-		tree.insert(6, "dsfdfvsd");
-		AVLTree t = new AVLTree();
-		t.insert(18, "gredc");
-		t.insert(24,  "asghdv");
-		t.insert(161, "fa,lf");
-		t.insert(23, "dsfdfvsd");		
-		t.insert(19, "gredc");
-		t.insert(52,  "asghdv");
-		t.insert(47, "fa,lf");
-		t.insert(34, "dsfdfvsd");
-		//System.out.println("num of rotations = " + tree.delete(14));
-		//System.out.println("num of rotations = " + tree.delete(6));
-		//System.out.println("num of rotations = " + tree.delete(10));
-		AVLTree root = new AVLTree();
-		root.insert(16, "dmfkds");
-		IAVLNode x = root.getRoot();
-		tree.join(x, t);
-	/*	AVLTree r = tree.createSubtree(tree.search_node(52, tree.getRoot()));
-		r.print();
-		System.out.println(tree.search_node(24, tree.getRoot()).getRight().getKey());
-		AVLTree[] arr = tree.split(12);
-		arr[0].print();
-		arr[1].print();*/
-	
-		
-	/*	AVLTree r = new AVLTree();
-		r.insert(23, "12");
-		AVLTree s = new AVLTree();
-		s.insert(52, "123");
-		s.insert(47, "123");
-		s.insert(161, "123");
-		s.insert(34, "123");
-		s.print();
-		AVLTree g = new AVLTree();
-		g.insert(24, "dk");
-		IAVLNode node = g.getRoot();
-		r.join(node, s);
-		r.print();
-*/
-	}
 
 	//Fields
 	private IAVLNode root;
@@ -174,7 +26,7 @@ public class AVLTree {
 		this.min = null;
 		this.max = null;
 	}
-	
+	// Sets the root of a tree to a given node
 	private void setRoot(IAVLNode node){
 		this.root = node;
 		IAVLNode parent = node.getParent();
@@ -206,19 +58,8 @@ public class AVLTree {
    * returns the info of an item with key k if it exists in the tree
    * otherwise, returns null
    */
- private void print (){
-	 TreePrinter.print(this.getRoot());
- }
-  public String search(int k)
-  {
-	IAVLNode root = this.root;
-	if (search_node(k,root)==null){
-		return null;
-	}
-	else {
-	return search_node(k, root).getValue();
-	}
-  }
+
+ // given key k and node recrusivly searches the node with key equals to k.
   private IAVLNode search_node (int k, IAVLNode node){
   	if (!node.isRealNode()){
   		return null;
@@ -233,37 +74,8 @@ public class AVLTree {
   		return search_node(k,node.getLeft());
 	}
   }
-
-  //Checks AVL Property
-  public boolean isAVL (){
- 	return isAVl_rec((AVLNode) this.getRoot());
-  }
-  public boolean isAVl_rec(AVLNode node){
-	  if (!node.isRealNode()) {
-		  return true;
-	  }
- 	else if (Math.abs(node.getBalanceFactor())>1) {
-		return false;
-	}
- 	else{
- 		return (isAVl_rec((AVLNode) node.getLeft())&& isAVl_rec((AVLNode) node.getRight()));
-	}
-  }
-
-  //Checks Binary Tree Property
-	public boolean isBST(){
- 		return isBST_rec(this.getRoot(),this.minNode(this.getRoot()).getKey(),this.maxNode(this.getRoot()).getKey());
-	}
-	public boolean isBST_rec(IAVLNode node,int min,int max){
- 		if (!node.isRealNode()) return true;
- 		if (node.getKey()<min || node.getKey()>max){
- 			return false;
-		}
- 		else{
- 			return isBST_rec(node.getLeft(),min,node.getKey()) && isBST_rec(node.getRight(),node.getKey(),max);
-		}
-	}
-	public IAVLNode minNode(IAVLNode node){
+	//given a node, find the minimum value of the subtree that node is the root of.
+ 	private IAVLNode minNode(IAVLNode node){
  	while (node.isRealNode()){
  		node = node.getLeft();
 	}
@@ -275,19 +87,7 @@ public class AVLTree {
 		}
 		return node.getParent();
 	}
-	//count length of route from the node to the root
-	// @pre: node is inside tree
-	public int getHeightByNode (IAVLNode node){
- 		if (!node.isRealNode()){
- 			return -1;
-		}
- 		int heightLeft = getHeightByNode(node.getLeft());
- 		int heightRight = getHeightByNode(node.getRight());
- 		return Math.max(heightLeft,heightRight)+1;
-	}
-	public int getHeightByKey(int key){
- 		return getHeightByNode(search_node(key,this.getRoot()));
-	}
+
 
 
   /**
@@ -300,7 +100,7 @@ public class AVLTree {
    * returns -1 if an item with key k already exists in the tree.
    */
   // node balance factor is -2
-  public void rightRotation (IAVLNode y){
+  private void rightRotation (IAVLNode y){
 		IAVLNode x = y.getLeft();
 	  	if (y==this.getRoot()){
 		this.root = x;
@@ -321,8 +121,8 @@ public class AVLTree {
 	  	x.setHeight(calcHeight(x));
 		b.setParent(y);
   }
-
-  public void leftRotation(IAVLNode y){
+	//Performs left Rotation
+  private void leftRotation(IAVLNode y){
   	IAVLNode x = y.getRight();
   	if(y==this.getRoot()){
   		this.root = x;
@@ -344,24 +144,27 @@ public class AVLTree {
   	x.setHeight(calcHeight(x));
   	b.setParent(y);
   }
-
-  public static int calcHeight (IAVLNode y){
+  // given a node y calculate his height base on his 2 children as in formula.
+  private static int calcHeight (IAVLNode y){
   	return Math.max(y.getLeft().getHeight(),y.getRight().getHeight())+1;
   }
-
-  public void rightThenLeftRotation (IAVLNode z){
+  //Performs right then left Rotation
+  private void rightThenLeftRotation (IAVLNode z){
   	rightRotation(z.getRight());
   	leftRotation(z);
   }
-	public void leftThenRightRotation (IAVLNode z){
+	//Performs right then left Rotation
+	private void leftThenRightRotation (IAVLNode z){
   		leftRotation(z.getLeft());
 		rightRotation(z);
 	}
+	//calculate balance factor based on the two children of a given node.
   private static int getBalanceFactor (IAVLNode node){
   	return node.getLeft().getHeight()- node.getRight().getHeight();
   }
 
-
+	//perform insert of a node given its key and info
+	// an envelope function of insert_rec that performs the actual insertion.
    public int insert(int k, String i) {
    	IAVLNode node = new AVLNode(k,i);
    	if (this.empty()){
@@ -423,16 +226,12 @@ public class AVLTree {
 		}
 
 	}
-  /**
-   * public int delete(int k)
-   *
-   * deletes an item with key k from the binary tree, if it is there;
-   * the tree must remain valid (keep its invariants).
-   * returns the number of rebalancing operations, or 0 if no rebalancing operations were needed.
-   * demotion/rotation - counted as one rebalnce operation, double-rotation is counted as 2.
-   * returns -1 if an item with key k was not found in the tree.
-   */
-	
+
+	// determines thae which operation should be used on a specific node.
+	//returns:
+		// 1 - if node is a leaf
+		// 2 - if node has one child
+		// 3 -  if node has 2 children
 	private int nodeKind(IAVLNode node) {
 		if (node.getHeight() == 0) { //node is a leaf
 			return 1;
@@ -509,6 +308,16 @@ public class AVLTree {
 			min = successor(min);
 		}
 	}
+
+	/**
+	 * public int delete(int k)
+	 *
+	 * deletes an item with key k from the binary tree, if it is there;
+	 * the tree must remain valid (keep its invariants).
+	 * returns the number of rebalancing operations, or 0 if no rebalancing operations were needed.
+	 * demotion/rotation - counted as one rebalnce operation, double-rotation is counted as 2.
+	 * returns -1 if an item with key k was not found in the tree.
+	 */
 	   public int delete(int k) {
 	   		IAVLNode node = search_node(k, this.root);
 		   	if(node == null) {
@@ -658,7 +467,7 @@ public class AVLTree {
 		   	return 0;
 	   }
 	
-
+		// goes up tree and fixes problems and performs rotation if necessary.
 	   private int keepBalanced(IAVLNode node) {
 		   int cnt = 0;
 		   while(node!=null) {
@@ -767,7 +576,7 @@ public class AVLTree {
   	treeToNodeArray(node.getRight(),arr,c);
 
   }
-
+	// return an ordered array of all keys in tree.
   public int[] keysToArray()
   {
 	  IAVLNode [] arr = new IAVLNode [this.size()];
@@ -861,7 +670,8 @@ public class AVLTree {
 	   array[1] = bigger;
 	   return array;
    }
-   
+   // given a node creates a subtree with node as it's root.
+	// after the action this tree isn't AVL tree!
   private AVLTree createSubtree(IAVLNode node) {
 	  AVLTree tree = new AVLTree();
 	  tree.setRoot(node);
@@ -1008,6 +818,8 @@ public class AVLTree {
 		}
    		return node;
 	}
+
+	//sets the pointer to the min and max new of the tree after join.
 	private void updateMinMaxJoin (AVLTree higher , AVLTree smaller , boolean higherIsLarger) {
 		if (higherIsLarger) {
 			this.min = smaller.min;
