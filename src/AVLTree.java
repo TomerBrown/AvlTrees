@@ -58,6 +58,15 @@ public class AVLTree {
    * returns the info of an item with key k if it exists in the tree
    * otherwise, returns null
    */
+ public String search (int k) {
+ 	IAVLNode ret = search_node(k,this.getRoot());
+ 	if (ret==null) return null;
+ 	else {
+ 		return ret.getValue();
+	}
+
+
+ }
 
  // given key k and node recrusivly searches the node with key equals to k.
   private IAVLNode search_node (int k, IAVLNode node){
