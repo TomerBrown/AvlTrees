@@ -674,6 +674,7 @@ public class AVLTree {
 	// after the action this tree isn't AVL tree!
   private AVLTree createSubtree(IAVLNode node) {
 	  AVLTree tree = new AVLTree();
+	  if (!node.isRealNode()) return tree;
 	  tree.setRoot(node);
 	  tree.min = tree.minNode(node);
 	  tree.max = tree.maxNode(node);
@@ -696,22 +697,24 @@ public class AVLTree {
     * postcondition: none
     */   
    public int join(IAVLNode x, AVLTree t)
-   {	this.size += t.size()+1;
+   {		
+	   this.size += t.size()+1;
+	   int complex = this.calcComplexity(t);
    		//Initial check if one or both is empty
 	   if (this.empty()&&t.empty()){
 	   	this.insert(x.getKey(),x.getValue());
-	   	return this.calcComplexity(t);
+	   	return complex;
 	   }
 	   if  (this.empty()){ //only this is empty
 	   	t.insert(x.getKey(),x.getValue());
 	   	this.root = t.getRoot();
 	   	this.min = t.min;
 	   	this.max=t.max;
-	   	return this.calcComplexity(t);
+	   	return complex;
 	   }
 	   if (t.empty()){ //only t is empty
 		   this.insert(x.getKey(),x.getValue());
-		   return this.calcComplexity(t);
+		   return complex;
 	   }
    		//Set pointers for larger and smaller trees according to theirs height (Complexity of stage: O(1))
    		AVLTree higherTree, shorterTree;
@@ -729,7 +732,7 @@ public class AVLTree {
 	   	int smallerTreeHeight = shorterTree.getRoot().getHeight();
 	   	if (largerTreeHeight-smallerTreeHeight<=1) {//that means we can simply merge
 			simpleMerge(t, x);
-			return this.calcComplexity(t);
+			return complex;
 		}
 	   		if (higher_is_larger){
 	   			x.setRight(higherTree.getRoot());
@@ -752,7 +755,7 @@ public class AVLTree {
 	   setHeightUpTree (x);
 	   keepBalanced(x);
 
-	   return this.calcComplexity(t);
+	   return complex;
 
    }
 	//Calculate the complexity as requested in conditions
@@ -837,7 +840,7 @@ public class AVLTree {
 	   * public interface IAVLNode
 	   * ! Do not delete or modify this - otherwise all tests will fail !
 	   */
-	public interface IAVLNode extends TreePrinter.PrintableNode {
+	public interface IAVLNode {
 		public int getKey(); //returns node's key (for virtuval node return -1)
 		public String getValue(); //returns node's value [info] (for virtuval node return null)
 		public void setLeft(IAVLNode node); //sets left child
@@ -916,22 +919,6 @@ public class AVLTree {
 	   public IAVLNode getRight() {
 
 		   return this.right;
-	   }
-
-	   @Override
-	   public String getText() {
-		   String str;
-		   if (this.isRealNode()) {
-			   if (this.getParent() == null) {
-				   str = "[" + String.valueOf(this.getKey()) + " ,h-" + String.valueOf(this.getHeight()) +"]";
-			   } else {
-				   str = "[" + String.valueOf(this.getKey()) + " ,h-" + String.valueOf(this.getHeight()) + ",p-" + String.valueOf(this.getParent().getKey()) + "]";
-			   }
-			   return str;
-		   }
-		   else{
-				   return "X";
-			   }
 	   }
 
 	   public void setParent(IAVLNode node) {
